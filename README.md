@@ -3,6 +3,13 @@ Some completed ffmpeg command to create slideshow video with effect from images 
 
 [ffmpeg static build] (https://www.johnvansickle.com/ffmpeg/)
 
+## Ken Burns Zoom to Center
+Zooming to the center means doing the same as above but for both X and Y coordinates; using the input width/height divided by the current zoom ratio, divided by 2 (the middle point).
+
+```
+ffmpeg -loop 1 -i photo.jpg -y -filter_complex [0]scale=1200:-2,setsar=1:1[out];[out]crop=1200:670[out];[out]scale=8000:-1,zoompan=z='zoom+0.001':x=iw/2-(iw/zoom/2):y=ih/2-(ih/zoom/2):d=250:s=1200x670:fps=25[out] -acodec aac -vcodec libx264 -map [out] -map 0:a? -pix_fmt yuv420p -r 25 -t 10 video.mp4
+```
+
 ## Blend Effect slideshow video
 ```
 ffmpeg -framerate 20 \
